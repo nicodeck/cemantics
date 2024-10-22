@@ -4,7 +4,9 @@ interface Props {
   guess: string;
 }
 
-type ReturnValue = { wordIsOk: false } | { wordIsOk: true; value: number };
+type ReturnValue =
+  | { wordIsOk: false }
+  | { wordIsOk: true; value: number; youWin: boolean };
 
 export const useGuessWord = async ({ guess }: Props): Promise<ReturnValue> => {
   console.log("Sending guess:", guess);
@@ -13,7 +15,11 @@ export const useGuessWord = async ({ guess }: Props): Promise<ReturnValue> => {
     const res = await axios.get(
       `https://nicolasdesc-dojo-sipios-12.deno.dev/?guess=${guess}`
     );
-    return { wordIsOk: true, value: res.data.value };
+    return {
+      wordIsOk: true,
+      value: res.data.value,
+      youWin: res.data.value === 100,
+    };
   } catch (error) {
     return { wordIsOk: false };
   }

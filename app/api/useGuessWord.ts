@@ -1,10 +1,10 @@
-import axios, { AxiosError } from "axios";
+import axios from "axios";
 
 interface Props {
   guess: string;
 }
 
-type ReturnValue =
+export type ReturnValue =
   | { wordIsOk: false }
   | { wordIsOk: true; value: number; youWin: boolean };
 

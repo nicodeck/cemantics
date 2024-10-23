@@ -16,7 +16,7 @@ export const HistoryItem = ({ guess, score, youWin }: Props) => {
             ? youWin
               ? "lightgreen"
               : "#fff"
-            : "lightcoral",
+            : "lightgrey",
         },
       ]}
     >

@@ -8,17 +8,15 @@ import {
   StyleSheet,
 } from "react-native";
 import { useGuessWord } from "../api/useGuessWord";
-import { useGuess } from "../state/useGuess";
-import { useHistory } from "../state/useHistory";
-import { useAtom, useSetAtom } from "jotai";
+import { useGuess } from "../state/useGuess.state";
+import { useAtom } from "jotai";
+import { useHistory } from "../state/useHistory.state";
 
 export function GuessInput() {
   const { guessAtom } = useGuess();
-  const { historyAtom, idAtom } = useHistory();
+  const { addGuessToHistory } = useHistory();
 
   const [guess, setGuess] = useAtom(guessAtom);
-  const setHistory = useSetAtom(historyAtom);
-  const [id, setId] = useAtom(idAtom);
 
   const handleSend = async () => {
     if (guess === "") {
@@ -26,20 +24,8 @@ export function GuessInput() {
     }
     try {
       const guessResult = await useGuessWord({ guess: guess });
-      if (!guessResult.wordIsOk) {
-        setHistory((prevHistory) => [...prevHistory, { id: id, guess: guess }]);
-      } else {
-        setHistory((prevHistory) => [
-          ...prevHistory,
-          {
-            id: id,
-            guess: guess,
-            score: guessResult.value,
-            youWin: guessResult.youWin,
-          },
-        ]);
-      }
-      setId(id + 1);
+
+      addGuessToHistory(guessResult);
       setGuess("");
     } catch (error) {
       console.error(error);

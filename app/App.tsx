@@ -1,6 +1,6 @@
 import { FlatList, SafeAreaView, StyleSheet, Text } from "react-native";
 import { HistoryItem } from "./components/HistoryItem";
-import { useHistory } from "./state/useHistory";
+import { useHistory } from "./state/useHistory.state";
 import { GuessInput } from "./components/GuessInput";
 import { useAtomValue } from "jotai";
 
